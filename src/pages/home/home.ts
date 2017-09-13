@@ -11,7 +11,8 @@ import * as firebase from 'firebase/app';
 export class HomePage {
   items: FirebaseListObservable<any[]>;
   state: firebase.User;
-
+  current: string;
+  
   constructor(
     public navCtrl: NavController,
     public auth: AngularFireAuth,
@@ -35,5 +36,33 @@ export class HomePage {
     console.log('logout');
     this.auth.auth.signOut();
     this.state = null;
+  }
+  addWord(word) {
+    this.items.push(word);
+  }
+  removeWord(word) {
+    console.log(`remove ${word}`);
+    let item = null;
+    this.items.forEach(a => a.forEach(v => {
+      console.log(v);
+      if (v.$value === word) {
+        console.log(`found ${word}`);
+        item = v;
+      }
+    }));
+    if (item) {
+      console.log(`remove ${item}`);
+      this.items.remove(item);
+    }
+  }
+  onKeyPress(event) {
+    if (event.keyCode === 13 && this.current && this.current.length) {
+      if (this.current.indexOf('-') === 0) {
+        this.removeWord(this.current.substr(1));
+      } else {
+        this.addWord(this.current);
+      }
+      this.current = '';
+    }
   }
 }
