@@ -3,15 +3,21 @@
     <ion-title>
       Ionic Blank
     </ion-title>
+    <ion-buttons right>
+      <button ion-button icon-only  *ngIf="!state" (click)="login()"><ion-icon name="key"></ion-icon></button>
+      <button ion-button icon-only  *ngIf="state" (click)="logout()"><ion-icon name="exit"></ion-icon></button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-list>
-		<ion-item class="text" *ngFor="let item of items | async">
-			{{item.$value}}
-		</ion-item>
+    <ion-item class="text" *ngFor="let item of items | async">
+      {{item.$value}}
+    </ion-item>
   </ion-list>
-  <button *ngIf="!state" (click)="login()">Login</button>
-  <button *ngIf="state" (click)="logout()">Logout</button>
+  <ion-item>
+    <ion-label>></ion-label>
+    <ion-input type="text"></ion-input>
+  </ion-item>
 </ion-content>
