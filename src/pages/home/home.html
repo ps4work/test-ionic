@@ -12,20 +12,21 @@
     </ion-buttons>
   </ion-navbar>
 </ion-header>
-
-<ion-split-pane>
-  <ion-content padding>
-    <ion-list>
-      <ion-item class="text" *ngFor="let item of items | async">
-        {{item.$value}}
-      </ion-item>
-    </ion-list>
-  </ion-content>
-  <ion-content padding>
-    <ion-list>
-      <ion-item class="text" *ngFor="let item of items | async">
-        {{item.$value}}
-      </ion-item>
-    </ion-list>
-  </ion-content>
-</ion-split-pane>
+<ion-content padding>
+  <ion-split-pane>
+    <ion-content padding>
+      <ion-list>
+        <ion-item class="text" *ngFor="let item of localItems">
+          {{item.word}}
+        </ion-item>
+      </ion-list>
+    </ion-content>
+    <ion-content padding>
+      <ion-list>
+        <ion-item class="text" *ngFor="let item of localItems">
+          {{item.word}}
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-split-pane>
+</ion-content>

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
+import { Subscription } from "rxjs/Subscription";
 
 @Component({
   selector: 'page-home',
@@ -10,9 +11,11 @@ import * as firebase from 'firebase/app';
 })
 export class HomePage {
   items: FirebaseListObservable<any[]>;
+  localItems;
   state: firebase.User;
   current: string;
-  
+  subscription: Subscription;
+
   constructor(
     public navCtrl: NavController,
     public auth: AngularFireAuth,
@@ -22,8 +25,15 @@ export class HomePage {
       console.log(state);
       this.state = state;
       if (state) {
-        this.items = db.list('/cousines');
+        this.subscription = db.list('/test').subscribe(v => {
+          console.log(v);
+          console.log(JSON.stringify(v));
+          this.localItems = JSON.parse(JSON.stringify(v)).reverse();
+          console.log(JSON.stringify(this.localItems));
+        });
+        this.items = db.list('/test');
       } else {
+        this.subscription.unsubscribe();
         this.items = null;
       }
     });
@@ -38,7 +48,8 @@ export class HomePage {
     this.state = null;
   }
   addWord(word) {
-    this.items.push(word);
+    let pushResult = this.items.push({ word: word });
+    console.log(pushResult);
   }
   removeWord(word) {
     console.log(`remove ${word}`);
