@@ -28,7 +28,7 @@ export class HomePage {
         this.subscription = db.list('/test').subscribe(v => {
           console.log(v);
           console.log(JSON.stringify(v));
-          this.localItems = JSON.parse(JSON.stringify(v)).reverse();
+          this.localItems = v.slice(0).reverse();
           console.log(JSON.stringify(this.localItems));
         });
         this.items = db.list('/test');
@@ -76,4 +76,6 @@ export class HomePage {
       this.current = '';
     }
   }
+
+  // test commit
 }
